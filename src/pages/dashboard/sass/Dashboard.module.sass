@@ -1,3 +1,5 @@
+@import "./../../../sass/variables"
+
 .dashboard
     width: 100vw
     height: 100vh
@@ -18,3 +20,17 @@
     display: grid
     grid-template-columns: repeat(4, 1fr)
     gap: 12px
+
+.camera
+    min-width: 300px
+    position: relative
+
+    &Label
+        padding: 3px 6px
+        background-color: $color-third-background
+
+    &Text
+        position: absolute
+        top: 50%
+        left: 50%
+        transform: translate(-50%, -50%)
