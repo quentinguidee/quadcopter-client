@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import React from "react";
 
 import styles from "./sass/Panel.module.sass";
@@ -13,7 +14,7 @@ export default function Panel(props: PanelProps) {
             style={{
                 flexGrow: props.grow,
             }}
-            className={styles.panel}
+            className={classNames(styles.panel, props.className)}
         />
     );
 }

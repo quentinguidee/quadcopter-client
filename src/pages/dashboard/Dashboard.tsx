@@ -1,7 +1,8 @@
 import React from "react";
-import Layout from "../components/layout/Layout";
-import LayoutSpace from "../components/layout/LayoutSpace";
-import Panel from "../components/panel/Panel";
+import Layout from "../../components/layout/Layout";
+import LayoutSpace from "../../components/layout/LayoutSpace";
+import Panel from "../../components/panel/Panel";
+import ActionsPanel from "./ActionsPanel";
 
 import styles from "./sass/Dashboard.module.sass";
 
@@ -10,7 +11,7 @@ export default function Dashboard() {
         <div className={styles.dashboard}>
             <Layout fullSize orientation="horizontal">
                 <Layout orientation="vertical">
-                    <Panel>Buttons</Panel>
+                    <ActionsPanel />
                     <Panel>Accelerometer</Panel>
                     <Panel grow={1}>Logs</Panel>
                 </Layout>

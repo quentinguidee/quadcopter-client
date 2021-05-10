@@ -1,5 +1,5 @@
 import React from "react";
-import Dashboard from "../../pages/Dashboard";
+import Dashboard from "../../pages/dashboard/Dashboard";
 
 import styles from "./sass/App.module.sass";
 
