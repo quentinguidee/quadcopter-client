@@ -1,0 +1,114 @@
+@import "./../../../sass/variables"
+
+$width: 40px
+$top-padding: 30px
+$bottom-padding: 30px
+
+.drone
+    display: inline-block
+    align-self: center
+    position: relative
+    width: 250px
+    height: 250px + $top-padding + $bottom-padding
+
+    &Top
+        position: absolute
+        background-color: $color-third-background
+        height: $width
+        top: $top-padding
+        left: 0
+        right: 0
+
+    &Center
+        position: absolute
+        background-color: $color-third-background
+        top: $top-padding
+        bottom: $bottom-padding
+        width: $width
+        left: 50%
+        transform: translateX(-50%)
+
+    &Bottom
+        position: absolute
+        background-color: $color-third-background
+        height: $width
+        bottom: $bottom-padding
+        left: 0
+        right: 0
+
+.led
+    position: absolute
+    border-radius: 50%
+    height: $width / 1.8
+    width: $width / 1.8
+    background-color: $color-fourth-background
+
+    &A
+        top: $width / 2 + $top-padding
+        left: $width / 2
+        transform: translate(-50%, -50%)
+
+    &B
+        top: $width / 2 + $top-padding
+        right: $width / 2
+        transform: translate(50%, -50%)
+
+    &C
+        bottom: $width / 2 + $bottom-padding
+        left: $width / 2
+        transform: translate(-50%, 50%)
+
+    &D
+        bottom: $width / 2 + $bottom-padding
+        right: $width / 2
+        transform: translate(50%, 50%)
+
+.label
+    position: absolute
+    white-space: nowrap
+    &A
+        top: 0
+        left: 0
+    &B
+        top: 0
+        right: 0
+    &C
+        bottom: 0
+        left: 0
+    &D
+        bottom: 0
+        right: 0
+
+.board
+    position: absolute
+    background-color: $color-fourth-background
+    width: $width - 8px
+    transform: translate(-50%, -50%)
+    left: 50%
+    top: 50%
+    height: 50px
+
+    &Label
+        transform: translate(-50%, -50%)
+        left: calc(50% + 70px)
+        top: 50%
+
+.battery
+    position: absolute
+    background-color: $color-fourth-background
+    width: $width - 8px
+    transform: translate(-50%, -50%)
+    left: 50%
+    top: calc(50% + 45px)
+    height: 30px
+
+    &Label
+        transform: translate(-50%, -50%)
+        left: calc(50% + 70px)
+        top: calc(50% + 45px)
+.dot
+    display: inline-block
+    width: 10px
+    height: 10px
+    border-radius: 50%
+    margin-left: 8px

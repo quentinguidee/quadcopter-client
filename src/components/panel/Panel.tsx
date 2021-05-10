@@ -13,6 +13,7 @@ export default function Panel(props: PanelProps) {
             {...props}
             style={{
                 flexGrow: props.grow,
+                ...props.style,
             }}
             className={classNames(styles.panel, props.className)}
         />
