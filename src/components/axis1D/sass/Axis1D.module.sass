@@ -1,0 +1,33 @@
+@import "./../../../sass/variables"
+
+.axis1D
+    text-align: center
+
+.zone
+    background-color: $color-third-background
+    width: 36px
+    height: 150px
+    position: relative
+    overflow: hidden
+    text-align: center
+
+.jauge
+    background-color: $color-fourth-background
+    width: 100%
+    height: 100%
+    position: absolute
+    z-index: 1
+    bottom: 0
+    transform: max-height 0.05 ease-in-out
+
+.value
+    position: absolute
+    transform: translateX(-50%)
+    color: $color-primary-text
+    font-size: 10px
+    top: 4px
+    z-index: 2
+
+.name
+    display: inline-block
+    margin-top: 12px

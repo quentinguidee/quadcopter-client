@@ -5,6 +5,7 @@ import Panel from "../../components/panel/Panel";
 import AccelerometerPanel from "./AccelerometerPanel";
 import ActionsPanel from "./ActionsPanel";
 import LogsPanel from "./LogsPanel";
+import MotorsPanel from "./MotorsPanel";
 
 import styles from "./sass/Dashboard.module.sass";
 
@@ -20,7 +21,7 @@ export default function Dashboard() {
                 <Layout grow={1} orientation="vertical">
                     <Panel grow={4}>2D View</Panel>
                     <Layout orientation="horizontal">
-                        <Panel>Motors</Panel>
+                        <MotorsPanel />
                         <LayoutSpace />
                         <Panel>Camera</Panel>
                     </Layout>
