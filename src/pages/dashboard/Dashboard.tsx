@@ -2,6 +2,7 @@ import React from "react";
 import Layout from "../../components/layout/Layout";
 import LayoutSpace from "../../components/layout/LayoutSpace";
 import Panel from "../../components/panel/Panel";
+import AccelerometerPanel from "./AccelerometerPanel";
 import ActionsPanel from "./ActionsPanel";
 
 import styles from "./sass/Dashboard.module.sass";
@@ -12,7 +13,7 @@ export default function Dashboard() {
             <Layout fullSize orientation="horizontal">
                 <Layout orientation="vertical">
                     <ActionsPanel />
-                    <Panel>Accelerometer</Panel>
+                    <AccelerometerPanel />
                     <Panel grow={1}>Logs</Panel>
                 </Layout>
                 <Layout grow={1} orientation="vertical">
