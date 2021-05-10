@@ -1,15 +1,18 @@
-import React, { useState } from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
 import Button from "../../components/button/Button";
 import Panel from "../../components/panel/Panel";
 import { server } from "../../server";
+import { State } from "./Dashboard";
 
 import styles from "./sass/Dashboard.module.sass";
 
-type State = "disconnected" | "on" | "off";
+type ActionsPanelProps = {
+    state: State;
+    setState: Dispatch<SetStateAction<State>>;
+};
 
-export default function ActionsPanel() {
-    const [state, setState] = useState<State>("disconnected");
-
+export default function ActionsPanel(props: ActionsPanelProps) {
+    const { state, setState } = props;
     const on = async () => {
         const request = await server.post("/drone/on");
         if (request.status === 200) {

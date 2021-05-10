@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Layout from "../../components/layout/Layout";
 import LayoutSpace from "../../components/layout/LayoutSpace";
 import AccelerometerPanel from "./AccelerometerPanel";
@@ -10,12 +10,16 @@ import View2DPanel from "./View2DPanel";
 
 import styles from "./sass/Dashboard.module.sass";
 
+export type State = "disconnected" | "on" | "off";
+
 export default function Dashboard() {
+    const [state, setState] = useState<State>("disconnected");
+
     return (
         <div className={styles.dashboard}>
             <Layout fullSize orientation="horizontal">
                 <Layout orientation="vertical">
-                    <ActionsPanel />
+                    <ActionsPanel state={state} setState={setState} />
                     <AccelerometerPanel />
                     <LogsPanel />
                 </Layout>
