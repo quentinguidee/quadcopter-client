@@ -1,6 +1,5 @@
 import React from "react";
 import Axis2D from "../../components/axis2D/Axis2D";
-import Button from "../../components/button/Button";
 import Panel from "../../components/panel/Panel";
 
 import styles from "./sass/Dashboard.module.sass";
