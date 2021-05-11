@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "../../components/layout/Layout";
 import LayoutSpace from "../../components/layout/LayoutSpace";
 import AccelerometerPanel from "./AccelerometerPanel";
@@ -9,17 +9,28 @@ import CameraPanel from "./CameraPanel";
 import View2DPanel from "./View2DPanel";
 
 import styles from "./sass/Dashboard.module.sass";
+import { socket } from "../../server";
 
-export type State = "disconnected" | "on" | "off";
+export type State = "unknown" | "disconnected" | "on" | "off";
 
 export default function Dashboard() {
-    const [state, setState] = useState<State>("disconnected");
+    const [state, setState] = useState<State>("unknown");
+
+    const listenState = () => {
+        socket.on("state", (state) => {
+            setState(state);
+        });
+    };
+
+    useEffect(() => {
+        listenState();
+    }, []);
 
     return (
         <div className={styles.dashboard}>
             <Layout fullSize orientation="horizontal">
                 <Layout orientation="vertical">
-                    <ActionsPanel state={state} setState={setState} />
+                    <ActionsPanel state={state} />
                     <AccelerometerPanel />
                     <LogsPanel />
                 </Layout>

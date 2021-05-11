@@ -8,35 +8,17 @@ import styles from "./sass/Dashboard.module.sass";
 
 type ActionsPanelProps = {
     state: State;
-    setState: Dispatch<SetStateAction<State>>;
 };
 
 export default function ActionsPanel(props: ActionsPanelProps) {
-    const { state, setState } = props;
-    const on = async () => {
-        const request = await server.post("/drone/on");
-        if (request.status === 200) {
-            setState("on");
-        }
-    };
+    const { state } = props;
 
-    const off = async () => {
-        const request = await server.post("/drone/off");
-        if (request.status === 200) {
-            setState("off");
-        }
-    };
-
+    const on = async () => await server.post("/drone/on");
+    const off = async () => await server.post("/drone/off");
     const liftoff = () => {};
     const landing = () => {};
     const emergencyStop = () => {};
-
-    const connect = async () => {
-        const request = await server.post("/drone/connect");
-        if (request.status === 200) {
-            setState("off");
-        }
-    };
+    const connect = async () => await server.post("/drone/connect");
 
     return (
         <Panel className={styles.actions}>
