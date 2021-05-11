@@ -38,8 +38,33 @@ function Dot(props: DotProps) {
     );
 }
 
-function Led(props: { name: string }) {
-    return <div className={classNames(styles.led, styles[props.name])} />;
+type LedColor = "off" | "blue" | "red";
+
+type LedProps = {
+    name: string;
+    color: LedColor;
+    on: boolean;
+};
+
+function Led(props: LedProps) {
+    let color;
+    if (props.on) {
+        switch (props.color) {
+            case "blue":
+                color = "#3d92b9";
+                break;
+            case "red":
+                color = "#b93d3d";
+                break;
+        }
+    }
+
+    return (
+        <div
+            className={classNames(styles.led, styles[props.name])}
+            style={{ backgroundColor: color }}
+        />
+    );
 }
 
 type LabelProps = {
@@ -83,10 +108,10 @@ function Drone(props: { drone: IDrone }) {
             <div className={styles.droneTop} />
             <div className={styles.droneCenter} />
             <div className={styles.droneBottom} />
-            <Led name="ledA" />
-            <Led name="ledB" />
-            <Led name="ledC" />
-            <Led name="ledD" />
+            <Led name="ledA" color="blue" on={leds.led1 === "on"} />
+            <Led name="ledB" color="blue" on={leds.led1 === "on"} />
+            <Led name="ledC" color="red" on={leds.led1 === "on"} />
+            <Led name="ledD" color="red" on={leds.led1 === "on"} />
             <Label
                 name="labelA"
                 label="LED A"
