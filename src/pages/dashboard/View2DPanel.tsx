@@ -1,11 +1,15 @@
-import classNames from "classnames";
 import React from "react";
+
+import classNames from "classnames";
 import Panel from "../../components/panel/Panel";
+import { IDrone, LedState } from "./Dashboard";
 
 import styles from "./sass/View2D.module.sass";
 
+type DotColor = "green" | "orange" | "red" | "gray";
+
 type DotProps = {
-    color: "green" | "orange" | "red";
+    color: DotColor;
 };
 
 function Dot(props: DotProps) {
@@ -19,6 +23,9 @@ function Dot(props: DotProps) {
             break;
         case "red":
             color = "#e73f29";
+            break;
+        case "gray":
+            color = "#7c7c7c";
             break;
     }
     return (
@@ -38,18 +45,39 @@ function Led(props: { name: string }) {
 type LabelProps = {
     name: string;
     label: string;
+    color: DotColor;
 };
 
 function Label(props: LabelProps) {
     return (
         <div className={classNames(styles.label, styles[props.name])}>
             {props.label}
-            <Dot color="green" />
+            <Dot color={props.color} />
         </div>
     );
 }
 
-function Drone() {
+function Drone(props: { drone: IDrone }) {
+    const { state, leds } = props.drone;
+
+    const getLedDotColor = (led: LedState): DotColor => {
+        switch (led) {
+            case "disconnected":
+                return "gray";
+            case "off":
+                return "gray";
+            case "on":
+                return "green";
+        }
+    };
+
+    const getArduinoColor = (): DotColor => {
+        if (state === "disconnected" || state === "unknown") {
+            return "gray";
+        }
+        return "green";
+    };
+
     return (
         <div className={styles.drone}>
             <div className={styles.droneTop} />
@@ -59,19 +87,43 @@ function Drone() {
             <Led name="ledB" />
             <Led name="ledC" />
             <Led name="ledD" />
-            <Label name="labelA" label="LED A" />
-            <Label name="labelB" label="LED B" />
-            <Label name="labelC" label="LED C" />
-            <Label name="labelD" label="LED D" />
+            <Label
+                name="labelA"
+                label="LED A"
+                color={getLedDotColor(leds.led1)}
+            />
+            <Label
+                name="labelB"
+                label="LED B"
+                color={getLedDotColor(leds.led2)}
+            />
+            <Label
+                name="labelC"
+                label="LED C"
+                color={getLedDotColor(leds.led3)}
+            />
+            <Label
+                name="labelD"
+                label="LED D"
+                color={getLedDotColor(leds.led4)}
+            />
             <div className={styles.board} />
             <div className={styles.battery} />
-            <Label name="boardLabel" label="Arduino" />
-            <Label name="batteryLabel" label="Battery" />
+            <Label
+                name="boardLabel"
+                label="Arduino"
+                color={getArduinoColor()}
+            />
+            <Label name="batteryLabel" label="Battery" color="gray" />
         </div>
     );
 }
 
-export default function View2DPanel() {
+type View2DPanelProps = {
+    drone: IDrone;
+};
+
+export default function View2DPanel(props: View2DPanelProps) {
     return (
         <Panel
             style={{
@@ -80,7 +132,7 @@ export default function View2DPanel() {
             }}
             grow={1}
         >
-            <Drone />
+            <Drone drone={props.drone} />
         </Panel>
     );
 }

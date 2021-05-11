@@ -13,29 +13,61 @@ import { socket } from "../../server";
 
 export type State = "unknown" | "disconnected" | "on" | "off";
 
-export default function Dashboard() {
-    const [state, setState] = useState<State>("unknown");
+export type LedState = "disconnected" | "on" | "off";
 
-    const listenState = () => {
+export type LedsState = {
+    led1: LedState;
+    led2: LedState;
+    led3: LedState;
+    led4: LedState;
+};
+
+export type IDrone = {
+    state: State;
+    leds: LedsState;
+};
+
+export default function Dashboard() {
+    const [drone, setDrone] = useState<IDrone>({
+        state: "unknown",
+        leds: {
+            led1: "disconnected",
+            led2: "disconnected",
+            led3: "disconnected",
+            led4: "disconnected",
+        },
+    });
+
+    const listenSocket = () => {
         socket.on("state", (state) => {
-            setState(state);
+            setDrone((previous) => ({
+                ...previous,
+                state: state,
+            }));
+        });
+
+        socket.on("leds", (leds) => {
+            setDrone((previous) => ({
+                ...previous,
+                leds: leds,
+            }));
         });
     };
 
     useEffect(() => {
-        listenState();
+        listenSocket();
     }, []);
 
     return (
         <div className={styles.dashboard}>
             <Layout fullSize orientation="horizontal">
                 <Layout orientation="vertical">
-                    <ActionsPanel state={state} />
+                    <ActionsPanel state={drone.state} />
                     <AccelerometerPanel />
                     <LogsPanel />
                 </Layout>
                 <Layout grow={1} orientation="vertical">
-                    <View2DPanel />
+                    <View2DPanel drone={drone} />
                     <Layout orientation="horizontal">
                         <MotorsPanel />
                         <LayoutSpace />
