@@ -26,10 +26,10 @@ export default function LogsPanel() {
 
         socket.on("logs", (log) => {
             setLogs((previous) => [
-                ...previous,
                 {
                     message: log,
                 },
+                ...previous,
             ]);
         });
     };
