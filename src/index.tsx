@@ -3,7 +3,11 @@ import ReactDOM from "react-dom";
 import App from "./components/app/App";
 import reportWebVitals from "./reportWebVitals";
 
+import { openSocket } from "./server";
+
 import "./index.sass";
+
+openSocket();
 
 ReactDOM.render(
     <React.StrictMode>
