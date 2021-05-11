@@ -16,7 +16,7 @@ export default function Button(props: ButtonProps) {
                 [styles.button]: true,
                 [styles.disabled]: props.disabled,
             })}
-            onClick={props.onClick}
+            onClick={props.disabled ? undefined : props.onClick}
         >
             {props.value.toUpperCase()}
         </div>
