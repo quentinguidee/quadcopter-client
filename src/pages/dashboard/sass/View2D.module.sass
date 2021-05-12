@@ -3,21 +3,24 @@
 $width: 40px
 $top-padding: 30px
 $bottom-padding: 30px
+$left-padding: 100px
+$right-padding: 100px
+$leds-offset: 32px
 
 .drone
     display: inline-block
     align-self: center
     position: relative
-    width: 250px
-    height: 250px + $top-padding + $bottom-padding
+    width: 290px + $left-padding + $right-padding
+    height: 290px + $top-padding + $bottom-padding
 
     &Top
         position: absolute
         background-color: $color-third-background
         height: $width
         top: $top-padding
-        left: 0
-        right: 0
+        left: $left-padding
+        right: $right-padding
 
     &Center
         position: absolute
@@ -33,51 +36,94 @@ $bottom-padding: 30px
         background-color: $color-third-background
         height: $width
         bottom: $bottom-padding
-        left: 0
-        right: 0
+        left: $left-padding
+        right: $right-padding
 
 .led
     position: absolute
     border-radius: 50%
-    height: $width / 1.8
-    width: $width / 1.8
+    height: $width / 3
+    width: $width / 3
     background-color: $color-fourth-background
 
     &A
         top: $width / 2 + $top-padding
-        left: $width / 2
+        left: $width / 2 + $leds-offset + $left-padding
         transform: translate(-50%, -50%)
 
     &B
         top: $width / 2 + $top-padding
-        right: $width / 2
+        right: $width / 2 + $leds-offset + $right-padding
         transform: translate(50%, -50%)
 
     &C
         bottom: $width / 2 + $bottom-padding
-        left: $width / 2
+        left: $width / 2 + $leds-offset + $left-padding
         transform: translate(-50%, 50%)
 
     &D
         bottom: $width / 2 + $bottom-padding
-        right: $width / 2
+        right: $width / 2 + $leds-offset + $right-padding
         transform: translate(50%, 50%)
+
+.motor
+    position: absolute
+    border-radius: 50%
+    height: $width / 1.7
+    width: $width / 1.7
+    background-color: $color-fourth-background
+
+    &A
+        top: $width / 2 + $top-padding
+        left: $width / 2 + $left-padding
+        transform: translate(-50%, -50%)
+
+    &B
+        top: $width / 2 + $top-padding
+        right: $width / 2 + $right-padding
+        transform: translate(50%, -50%)
+
+    &C
+        bottom: $width / 2 + $bottom-padding
+        left: $width / 2 + $left-padding
+        transform: translate(-50%, 50%)
+
+    &D
+        bottom: $width / 2 + $bottom-padding
+        right: $width / 2 + $right-padding
+        transform: translate(50%, 50%)
+
+    &Label
+        position: absolute
+        white-space: nowrap
+        &A
+            top: $width
+            left: 0
+        &B
+            top: $width
+            right: 0
+        &C
+            bottom: $width
+            left: 0
+        &D
+            bottom: $width
+            right: 0
 
 .label
     position: absolute
     white-space: nowrap
     &A
         top: 0
-        left: 0
+        left: $width / 3 + $leds-offset + $left-padding
     &B
         top: 0
-        right: 0
+        right: $width / 3 + $leds-offset + $right-padding
     &C
         bottom: 0
-        left: 0
+        left: $width / 3 + $leds-offset + $left-padding
     &D
         bottom: 0
-        right: 0
+        right: $width / 3 + $leds-offset + $right-padding
 
 .board
     position: absolute

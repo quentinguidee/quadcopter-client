@@ -67,6 +67,15 @@ function Led(props: LedProps) {
     );
 }
 
+type MotorProps = {
+    name: string;
+    on: boolean;
+};
+
+function Motor(props: MotorProps) {
+    return <div className={classNames(styles.motor, styles[props.name])} />;
+}
+
 type LabelProps = {
     name: string;
     label: string;
@@ -132,6 +141,14 @@ function Drone(props: { drone: IDrone }) {
                 label="LED D"
                 color={getLedDotColor(leds.led4)}
             />
+            <Motor name="motorA" on={false} />
+            <Motor name="motorB" on={false} />
+            <Motor name="motorC" on={false} />
+            <Motor name="motorD" on={false} />
+            <Label name="motorLabelA" label="MOTOR A" color="gray" />
+            <Label name="motorLabelB" label="MOTOR B" color="gray" />
+            <Label name="motorLabelC" label="MOTOR C" color="gray" />
+            <Label name="motorLabelD" label="MOTOR D" color="gray" />
             <div className={styles.board} />
             <div className={styles.battery} />
             <Label
