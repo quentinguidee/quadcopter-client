@@ -74,8 +74,9 @@ $motor-size: $width / 1.7
     height: $motor-size
     width: $motor-size
     background-color: $color-fourth-background
-    // ENABLE MOTORS SPIN:
-    // animation: motor-spin 0.3s linear infinite
+
+    &On
+        animation: motor-spin 0.3s linear infinite
 
     &::before, &::after
         content: ''

@@ -12,8 +12,20 @@ import styles from "./sass/Dashboard.module.sass";
 import { socket } from "../../server";
 
 export type State = "unknown" | "disconnected" | "on" | "off";
-
 export type LedState = "disconnected" | "on" | "off";
+export type MotorState = "disconnected" | "on" | "off";
+
+export type IMotor = {
+    state: MotorState;
+    speed?: number;
+};
+
+export type Motors = {
+    motor1: IMotor;
+    motor2: IMotor;
+    motor3: IMotor;
+    motor4: IMotor;
+};
 
 export type LedsState = {
     led1: LedState;
@@ -25,6 +37,7 @@ export type LedsState = {
 export type IDrone = {
     state: State;
     leds: LedsState;
+    motors: Motors;
 };
 
 export default function Dashboard() {
@@ -36,21 +49,25 @@ export default function Dashboard() {
             led3: "disconnected",
             led4: "disconnected",
         },
+        motors: {
+            motor1: { state: "disconnected", speed: undefined },
+            motor2: { state: "disconnected", speed: undefined },
+            motor3: { state: "disconnected", speed: undefined },
+            motor4: { state: "disconnected", speed: undefined },
+        },
     });
 
     const listenSocket = () => {
         socket.on("state", (state) => {
-            setDrone((previous) => ({
-                ...previous,
-                state: state,
-            }));
+            setDrone((previous) => ({ ...previous, state }));
         });
 
         socket.on("leds", (leds) => {
-            setDrone((previous) => ({
-                ...previous,
-                leds: leds,
-            }));
+            setDrone((previous) => ({ ...previous, leds }));
+        });
+
+        socket.on("motors", (motors) => {
+            setDrone((previous) => ({ ...previous, motors }));
         });
     };
 
@@ -69,7 +86,7 @@ export default function Dashboard() {
                 <Layout grow={1} orientation="vertical">
                     <View2DPanel drone={drone} />
                     <Layout orientation="horizontal">
-                        <MotorsPanel />
+                        <MotorsPanel motors={drone.motors} />
                         <LayoutSpace />
                         <CameraPanel />
                     </Layout>

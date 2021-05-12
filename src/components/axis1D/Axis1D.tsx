@@ -4,7 +4,7 @@ import styles from "./sass/Axis1D.module.sass";
 
 type Axis1DProps = {
     name: string;
-    value: number;
+    value?: number;
     min: number;
     max: number;
 };
@@ -12,12 +12,12 @@ type Axis1DProps = {
 export default function Axis1D(props: Axis1DProps) {
     const { min, max, value } = props;
 
-    const percentage = (100 * value) / (max - min);
+    const percentage = value ? (100 * value) / (max - min) : 0;
 
     return (
         <div className={styles.axis1D}>
             <div className={styles.zone}>
-                <span className={styles.value}>{props.value}</span>
+                <span className={styles.value}>{props.value ?? "/"}</span>
                 <div
                     className={styles.jauge}
                     style={{ maxHeight: `${percentage}%` }}

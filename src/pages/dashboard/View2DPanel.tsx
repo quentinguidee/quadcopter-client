@@ -2,7 +2,7 @@ import React from "react";
 
 import classNames from "classnames";
 import Panel from "../../components/panel/Panel";
-import { IDrone, LedState } from "./Dashboard";
+import { IDrone, LedState, IMotor, MotorState } from "./Dashboard";
 
 import styles from "./sass/View2D.module.sass";
 
@@ -73,7 +73,15 @@ type MotorProps = {
 };
 
 function Motor(props: MotorProps) {
-    return <div className={classNames(styles.motor, styles[props.name])} />;
+    return (
+        <div
+            className={classNames({
+                [styles.motor]: true,
+                [styles[props.name]]: true,
+                [styles.motorOn]: props.on,
+            })}
+        />
+    );
 }
 
 type LabelProps = {
@@ -92,7 +100,7 @@ function Label(props: LabelProps) {
 }
 
 function Drone(props: { drone: IDrone }) {
-    const { state, leds } = props.drone;
+    const { state, leds, motors } = props.drone;
 
     const getLedDotColor = (led: LedState): DotColor => {
         switch (led) {
@@ -110,6 +118,17 @@ function Drone(props: { drone: IDrone }) {
             return "gray";
         }
         return "green";
+    };
+
+    const getMotorColor = (motor: IMotor): DotColor => {
+        if (motor.state === "disconnected") {
+            return "gray";
+        }
+        return "green";
+    };
+
+    const motorIsOn = (motor: IMotor) => {
+        return motor.speed !== undefined && motor.speed !== 0;
     };
 
     return (
@@ -141,14 +160,30 @@ function Drone(props: { drone: IDrone }) {
                 label="LED D"
                 color={getLedDotColor(leds.led4)}
             />
-            <Motor name="motorA" on={false} />
-            <Motor name="motorB" on={false} />
-            <Motor name="motorC" on={false} />
-            <Motor name="motorD" on={false} />
-            <Label name="motorLabelA" label="MOTOR A" color="gray" />
-            <Label name="motorLabelB" label="MOTOR B" color="gray" />
-            <Label name="motorLabelC" label="MOTOR C" color="gray" />
-            <Label name="motorLabelD" label="MOTOR D" color="gray" />
+            <Motor name="motorA" on={motorIsOn(motors.motor1)} />
+            <Motor name="motorB" on={motorIsOn(motors.motor2)} />
+            <Motor name="motorC" on={motorIsOn(motors.motor3)} />
+            <Motor name="motorD" on={motorIsOn(motors.motor4)} />
+            <Label
+                name="motorLabelA"
+                label="MOTOR A"
+                color={getMotorColor(motors.motor1)}
+            />
+            <Label
+                name="motorLabelB"
+                label="MOTOR B"
+                color={getMotorColor(motors.motor2)}
+            />
+            <Label
+                name="motorLabelC"
+                label="MOTOR C"
+                color={getMotorColor(motors.motor3)}
+            />
+            <Label
+                name="motorLabelD"
+                label="MOTOR D"
+                color={getMotorColor(motors.motor4)}
+            />
             <div className={styles.board} />
             <div className={styles.battery} />
             <Label
