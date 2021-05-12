@@ -66,32 +66,50 @@ $leds-offset: 32px
         right: $width / 2 + $leds-offset + $right-padding
         transform: translate(50%, 50%)
 
+$motor-size: $width / 1.7
+
 .motor
     position: absolute
     border-radius: 50%
-    height: $width / 1.7
-    width: $width / 1.7
+    height: $motor-size
+    width: $motor-size
     background-color: $color-fourth-background
+    // ENABLE MOTORS SPIN:
+    // animation: motor-spin 0.3s linear infinite
+
+    &::before, &::after
+        content: ''
+        background-color: $color-third-background
+        position: absolute
+        display: inline-block
+        height: 6px
+        width: 6px
+        border-radius: 50%
+        z-index: 5
+
+    &::before
+        top: 4px
+        left: 4px
+
+    &::after
+        right: 4px
+        bottom: 4px
 
     &A
-        top: $width / 2 + $top-padding
-        left: $width / 2 + $left-padding
-        transform: translate(-50%, -50%)
+        top: $width / 2 + $top-padding - ($motor-size / 2)
+        left: $width / 2 + $left-padding - ($motor-size / 2)
 
     &B
-        top: $width / 2 + $top-padding
-        right: $width / 2 + $right-padding
-        transform: translate(50%, -50%)
+        top: $width / 2 + $top-padding - ($motor-size / 2)
+        right: $width / 2 + $right-padding - ($motor-size / 2)
 
     &C
-        bottom: $width / 2 + $bottom-padding
-        left: $width / 2 + $left-padding
-        transform: translate(-50%, 50%)
+        bottom: $width / 2 + $bottom-padding - ($motor-size / 2)
+        left: $width / 2 + $left-padding - ($motor-size / 2)
 
     &D
-        bottom: $width / 2 + $bottom-padding
-        right: $width / 2 + $right-padding
-        transform: translate(50%, 50%)
+        bottom: $width / 2 + $bottom-padding - ($motor-size / 2)
+        right: $width / 2 + $right-padding - ($motor-size / 2)
 
     &Label
         position: absolute
@@ -158,3 +176,9 @@ $leds-offset: 32px
     height: 10px
     border-radius: 50%
     margin-left: 8px
+
+@keyframes motor-spin
+    0%
+        transform: rotate(0deg)
+    100%
+        transform: rotate(360deg)
