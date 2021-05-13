@@ -2,7 +2,7 @@ import React, { CSSProperties } from "react";
 
 import classNames from "classnames";
 import Panel from "../../components/panel/Panel";
-import { IDrone, LedState, IMotor } from "./Dashboard";
+import { IDrone, LedState, IMotor, AccelerometerState } from "./Dashboard";
 
 import styles from "./sass/View2D.module.sass";
 
@@ -129,7 +129,7 @@ function BasicComponent(props: BasicComponentProps) {
 }
 
 function Drone(props: { drone: IDrone }) {
-    const { state, leds, motors } = props.drone;
+    const { state, accelerometer, leds, motors } = props.drone;
 
     const getLedDotColor = (led: LedState): DotColor => {
         switch (led) {
@@ -151,6 +151,13 @@ function Drone(props: { drone: IDrone }) {
 
     const getMotorColor = (motor: IMotor): DotColor => {
         if (motor.state === "disconnected") {
+            return "gray";
+        }
+        return "green";
+    };
+
+    const getAccelerometerColor = (): DotColor => {
+        if (accelerometer === "disconnected") {
             return "gray";
         }
         return "green";
@@ -227,7 +234,12 @@ function Drone(props: { drone: IDrone }) {
             <BasicComponent x={0} y={-80} height={20} />
             <Label x={0} y={-40} label="Arduino" color={getArduinoColor()} />
             <Label x={0} y={30} label="Battery" color="gray" />
-            <Label x={0} y={0} label="Accelerometer" color="gray" />
+            <Label
+                x={0}
+                y={0}
+                label="Accelerometer"
+                color={getAccelerometerColor()}
+            />
             <Label x={0} y={-80} label="WiFi" color="gray" />
         </div>
     );

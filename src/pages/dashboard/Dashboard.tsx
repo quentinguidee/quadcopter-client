@@ -14,6 +14,7 @@ import { socket } from "../../server";
 export type State = "unknown" | "disconnected" | "on" | "off";
 export type LedState = "disconnected" | "on" | "off";
 export type MotorState = "disconnected" | "on" | "off";
+export type AccelerometerState = "disconnected" | "on";
 
 export type IMotor = {
     state: MotorState;
@@ -36,6 +37,7 @@ export type LedsState = {
 
 export type IDrone = {
     state: State;
+    accelerometer: AccelerometerState;
     leds: LedsState;
     motors: Motors;
 };
@@ -43,6 +45,7 @@ export type IDrone = {
 export default function Dashboard() {
     const [drone, setDrone] = useState<IDrone>({
         state: "unknown",
+        accelerometer: "disconnected",
         leds: {
             led1: "disconnected",
             led2: "disconnected",
@@ -68,6 +71,10 @@ export default function Dashboard() {
 
         socket.on("motors", (motors) => {
             setDrone((previous) => ({ ...previous, motors }));
+        });
+
+        socket.on("accelerometer", (accelerometer) => {
+            setDrone((previous) => ({ ...previous, accelerometer }));
         });
     };
 
