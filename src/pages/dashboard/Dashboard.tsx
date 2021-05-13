@@ -10,11 +10,18 @@ import View2DPanel from "./View2DPanel";
 
 import styles from "./sass/Dashboard.module.sass";
 import { socket } from "../../server";
+import View3DGyro from "./View3DGyro";
 
 export type State = "unknown" | "disconnected" | "on" | "off";
 export type LedState = "disconnected" | "on" | "off";
 export type MotorState = "disconnected" | "on" | "off";
 export type AccelerometerState = "disconnected" | "on";
+
+export type Coordinate = {
+    x: number;
+    y: number;
+    z: number;
+};
 
 export type IMotor = {
     state: MotorState;
@@ -38,6 +45,8 @@ export type LedsState = {
 export type IDrone = {
     state: State;
     accelerometer: AccelerometerState;
+    position: Coordinate;
+    angle: Coordinate;
     leds: LedsState;
     motors: Motors;
 };
@@ -46,6 +55,8 @@ export default function Dashboard() {
     const [drone, setDrone] = useState<IDrone>({
         state: "unknown",
         accelerometer: "disconnected",
+        position: { x: 0, y: 0, z: 0 },
+        angle: { x: 0, y: 0, z: 0 },
         leds: {
             led1: "disconnected",
             led2: "disconnected",
@@ -76,6 +87,14 @@ export default function Dashboard() {
         socket.on("accelerometer", (accelerometer) => {
             setDrone((previous) => ({ ...previous, accelerometer }));
         });
+
+        socket.on("position", (position) => {
+            setDrone((previous) => ({ ...previous, position }));
+        });
+
+        socket.on("angle", (angle) => {
+            setDrone((previous) => ({ ...previous, angle }));
+        });
     };
 
     useEffect(() => {
@@ -94,6 +113,7 @@ export default function Dashboard() {
                     <View2DPanel drone={drone} />
                     <Layout orientation="horizontal">
                         <MotorsPanel motors={drone.motors} />
+                        <View3DGyro angle={drone.angle} />
                         <LayoutSpace />
                         <CameraPanel />
                     </Layout>
