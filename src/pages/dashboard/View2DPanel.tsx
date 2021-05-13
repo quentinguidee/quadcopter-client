@@ -96,7 +96,7 @@ type LabelProps = {
 
 function Label(props: LabelProps) {
     const style: CSSProperties = {
-        transform: "translateY(-50%)",
+        transform: props.name ? undefined : "translateY(-50%)",
         left: `calc(50% - ${props.x}px + 30px)`,
         top: `calc(50% - ${props.y}px)`,
     };
