@@ -76,7 +76,11 @@ $motor-size: $width / 1.7
     background-color: $color-fourth-background
 
     &On
-        animation: motor-spin 0.3s linear infinite
+        &Clockwise
+            animation: motor-spin 0.3s linear infinite
+
+        &Counterclockwise
+            animation: motor-spin 0.3s linear infinite reverse
 
     &::before, &::after
         content: ''
@@ -144,33 +148,12 @@ $motor-size: $width / 1.7
         bottom: 0
         right: $width / 3 + $leds-offset + $right-padding
 
-.board
+.component
     position: absolute
     background-color: $color-fourth-background
     width: $width - 8px
     transform: translate(-50%, -50%)
-    left: 50%
-    top: 50%
-    height: 50px
 
-    &Label
-        transform: translate(-50%, -50%)
-        left: calc(50% + 70px)
-        top: 50%
-
-.battery
-    position: absolute
-    background-color: $color-fourth-background
-    width: $width - 8px
-    transform: translate(-50%, -50%)
-    left: 50%
-    top: calc(50% + 45px)
-    height: 30px
-
-    &Label
-        transform: translate(-50%, -50%)
-        left: calc(50% + 70px)
-        top: calc(50% + 45px)
 .dot
     display: inline-block
     width: 10px

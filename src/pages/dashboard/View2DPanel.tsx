@@ -1,8 +1,8 @@
-import React from "react";
+import React, { CSSProperties } from "react";
 
 import classNames from "classnames";
 import Panel from "../../components/panel/Panel";
-import { IDrone, LedState, IMotor, MotorState } from "./Dashboard";
+import { IDrone, LedState, IMotor } from "./Dashboard";
 
 import styles from "./sass/View2D.module.sass";
 
@@ -70,6 +70,7 @@ function Led(props: LedProps) {
 type MotorProps = {
     name: string;
     on: boolean;
+    clockwise: boolean;
 };
 
 function Motor(props: MotorProps) {
@@ -78,25 +79,53 @@ function Motor(props: MotorProps) {
             className={classNames({
                 [styles.motor]: true,
                 [styles[props.name]]: true,
-                [styles.motorOn]: props.on,
+                [styles.motorOnClockwise]: props.on && props.clockwise,
+                [styles.motorOnCounterclockwise]: props.on && !props.clockwise,
             })}
         />
     );
 }
 
 type LabelProps = {
-    name: string;
+    name?: string;
     label: string;
     color: DotColor;
+    x?: number;
+    y?: number;
 };
 
 function Label(props: LabelProps) {
+    const style: CSSProperties = {
+        transform: "translateY(-50%)",
+        left: `calc(50% - ${props.x}px + 30px)`,
+        top: `calc(50% - ${props.y}px)`,
+    };
+
     return (
-        <div className={classNames(styles.label, styles[props.name])}>
+        <div
+            className={classNames(styles.label, styles[props.name || ""])}
+            style={style}
+        >
             {props.label}
             <Dot color={props.color} />
         </div>
     );
+}
+
+type BasicComponentProps = {
+    x: number;
+    y: number;
+    height: number;
+};
+
+function BasicComponent(props: BasicComponentProps) {
+    const style: CSSProperties = {
+        left: `calc(50% - ${props.x}px)`,
+        top: `calc(50% - ${props.y}px)`,
+        height: `${props.height}px`,
+    };
+
+    return <div className={styles.component} style={style} />;
 }
 
 function Drone(props: { drone: IDrone }) {
@@ -160,10 +189,18 @@ function Drone(props: { drone: IDrone }) {
                 label="LED D"
                 color={getLedDotColor(leds.led4)}
             />
-            <Motor name="motorA" on={motorIsOn(motors.motor1)} />
-            <Motor name="motorB" on={motorIsOn(motors.motor2)} />
-            <Motor name="motorC" on={motorIsOn(motors.motor3)} />
-            <Motor name="motorD" on={motorIsOn(motors.motor4)} />
+            <Motor name="motorA" on={motorIsOn(motors.motor1)} clockwise />
+            <Motor
+                name="motorB"
+                on={motorIsOn(motors.motor2)}
+                clockwise={false}
+            />
+            <Motor
+                name="motorC"
+                on={motorIsOn(motors.motor3)}
+                clockwise={false}
+            />
+            <Motor name="motorD" on={motorIsOn(motors.motor4)} clockwise />
             <Label
                 name="motorLabelA"
                 label="MOTOR A"
@@ -184,14 +221,14 @@ function Drone(props: { drone: IDrone }) {
                 label="MOTOR D"
                 color={getMotorColor(motors.motor4)}
             />
-            <div className={styles.board} />
-            <div className={styles.battery} />
-            <Label
-                name="boardLabel"
-                label="Arduino"
-                color={getArduinoColor()}
-            />
-            <Label name="batteryLabel" label="Battery" color="gray" />
+            <BasicComponent x={0} y={-40} height={50} />
+            <BasicComponent x={0} y={30} height={30} />
+            <BasicComponent x={0} y={0} height={20} />
+            <BasicComponent x={0} y={-80} height={20} />
+            <Label x={0} y={-40} label="Arduino" color={getArduinoColor()} />
+            <Label x={0} y={30} label="Battery" color="gray" />
+            <Label x={0} y={0} label="Accelerometer" color="gray" />
+            <Label x={0} y={-80} label="WiFi" color="gray" />
         </div>
     );
 }
