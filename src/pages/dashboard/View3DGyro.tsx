@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 
-import { Canvas, useFrame } from "@react-three/fiber";
+import { Canvas } from "@react-three/fiber";
 import Panel from "../../components/panel/Panel";
-import { Clock, Euler, MathUtils, Mesh } from "three";
+import { MathUtils } from "three";
 import { animated, config, useSpring } from "@react-spring/three";
 import { Coordinate } from "./Dashboard";
 

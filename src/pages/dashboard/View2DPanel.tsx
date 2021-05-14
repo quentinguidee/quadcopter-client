@@ -2,7 +2,7 @@ import React, { CSSProperties } from "react";
 
 import classNames from "classnames";
 import Panel from "../../components/panel/Panel";
-import { IDrone, LedState, IMotor, AccelerometerState } from "./Dashboard";
+import { IDrone, LedState, IMotor } from "./Dashboard";
 
 import styles from "./sass/View2D.module.sass";
 
