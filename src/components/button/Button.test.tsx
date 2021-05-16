@@ -5,12 +5,12 @@ test("Button click", () => {
     const onClick = jest.fn();
     render(<Button value="Value" onClick={onClick} />);
     fireEvent.click(screen.getByText("VALUE"));
-    expect(onClick.mock.calls.length).toBe(1);
+    expect(onClick).toBeCalledTimes(1);
 });
 
 test("Button disabled click", () => {
     const onClick = jest.fn();
     render(<Button value="Value" onClick={onClick} disabled />);
     fireEvent.click(screen.getByText("VALUE"));
-    expect(onClick.mock.calls.length).toBe(0);
+    expect(onClick).toBeCalledTimes(0);
 });
