@@ -22,8 +22,6 @@ export default function LogsPanel() {
     const [logs, setLogs] = useState<ILog[]>([]);
 
     const listenLogs = () => {
-        console.log("LISTEN");
-
         socket.on("logs", (log) => {
             setLogs((previous) => [
                 {
