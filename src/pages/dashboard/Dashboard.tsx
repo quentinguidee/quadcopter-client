@@ -9,7 +9,7 @@ import CameraPanel from "./CameraPanel";
 import View2DPanel from "./View2DPanel";
 
 import styles from "./sass/Dashboard.module.sass";
-import { socket } from "../../server";
+import { socket } from "../../socket";
 import View3DGyro from "./View3DGyro";
 
 export type State = "unknown" | "disconnected" | "on" | "off" | "motorstest";

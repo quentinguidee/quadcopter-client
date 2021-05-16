@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Panel from "../../components/panel/Panel";
-import { socket } from "../../server";
+import { socket } from "../../socket";
 
 import styles from "./sass/Dashboard.module.sass";
 
