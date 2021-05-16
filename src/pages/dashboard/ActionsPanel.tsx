@@ -16,6 +16,15 @@ export default function ActionsPanel(props: ActionsPanelProps) {
     const off = async () => await server.post("/drone/off");
     const liftoff = () => {};
     const landing = () => {};
+
+    const startMotorsTest = async () => {
+        await server.post("/drone/motorstest/on");
+    };
+
+    const stopMotorsTest = async () => {
+        await server.post("/drone/motorstest/off");
+    };
+
     const emergencyStop = () => {};
     const connect = async () => await server.post("/drone/connect");
 
@@ -32,6 +41,16 @@ export default function ActionsPanel(props: ActionsPanelProps) {
                 value="landing"
                 onClick={landing}
                 disabled={state !== "on"}
+            />
+            <Button
+                value="start test motors"
+                onClick={startMotorsTest}
+                disabled={state !== "on"}
+            />
+            <Button
+                value="stop motors test"
+                onClick={stopMotorsTest}
+                disabled={state !== "motorstest"}
             />
             <Button
                 value="emergency stop"

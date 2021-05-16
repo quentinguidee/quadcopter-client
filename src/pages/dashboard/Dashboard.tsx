@@ -12,7 +12,7 @@ import styles from "./sass/Dashboard.module.sass";
 import { socket } from "../../server";
 import View3DGyro from "./View3DGyro";
 
-export type State = "unknown" | "disconnected" | "on" | "off";
+export type State = "unknown" | "disconnected" | "on" | "off" | "motorstest";
 export type LedState = "disconnected" | "on" | "off";
 export type MotorState = "disconnected" | "on" | "off";
 export type AccelerometerState = "disconnected" | "on";
