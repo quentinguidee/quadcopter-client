@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Layout from "../../components/layout/Layout";
 import LayoutSpace from "../../components/layout/LayoutSpace";
-import AccelerometerPanel from "./AccelerometerPanel";
 import ActionsPanel from "./ActionsPanel";
 import LogsPanel from "./LogsPanel";
 import MotorsPanel from "./MotorsPanel";
@@ -106,7 +105,7 @@ export default function Dashboard() {
             <Layout fullSize orientation="horizontal">
                 <Layout orientation="vertical">
                     <ActionsPanel state={drone.state} />
-                    <AccelerometerPanel />
+                    {/* <AccelerometerPanel /> */}
                     <LogsPanel />
                 </Layout>
                 <Layout grow={1} orientation="vertical">
