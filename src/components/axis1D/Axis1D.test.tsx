@@ -5,6 +5,6 @@ it("should render Axis1D", () => {
     render(<Axis1D name="Axis 1D" value={30} min={10} max={60} />);
 });
 
-it("should render Axis1D without value", () => {
+it("should render disabled Axis1D", () => {
     render(<Axis1D name="Axis 1D" min={10} max={60} />);
 });

@@ -4,6 +4,7 @@
     text-align: center
 
 .zone
+    display: inline-block
     background-color: $color-third-background
     width: 36px
     height: 150px
@@ -27,7 +28,15 @@
     font-size: 10px
     top: 4px
     z-index: 2
+    transition: opacity 0.2s ease-in-out
+
+    .disabled &
+        opacity: 0
 
 .name
-    display: inline-block
+    display: block
     margin-top: 12px
+    transition: color 0.2s ease-in-out
+
+    .disabled &
+        color: $color-secondary-text

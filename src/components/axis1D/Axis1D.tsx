@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import React from "react";
 
 import styles from "./sass/Axis1D.module.sass";
@@ -15,9 +16,14 @@ export default function Axis1D(props: Axis1DProps) {
     const percentage = value ? (100 * value) / (max - min) : 0;
 
     return (
-        <div className={styles.axis1D}>
+        <div
+            className={classNames({
+                [styles.axis1D]: true,
+                [styles.disabled]: value === undefined,
+            })}
+        >
             <div className={styles.zone}>
-                <span className={styles.value}>{props.value ?? "/"}</span>
+                <span className={styles.value}>{props.value}</span>
                 <div
                     className={styles.jauge}
                     style={{ maxHeight: `${percentage}%` }}
