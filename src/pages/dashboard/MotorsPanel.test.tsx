@@ -2,7 +2,7 @@ import { render } from "@testing-library/react";
 import { Motors } from "./Dashboard";
 import MotorsPanel from "./MotorsPanel";
 
-test("Render MotorsPanel", () => {
+it("should render MotorsPanel", () => {
     const motors: Motors = {
         motor1: { state: "disconnected", speed: undefined },
         motor2: { state: "disconnected", speed: undefined },

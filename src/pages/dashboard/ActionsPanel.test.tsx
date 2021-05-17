@@ -1,6 +1,6 @@
 import { render } from "@testing-library/react";
 import ActionsPanel from "./ActionsPanel";
 
-test("Render ActionsPanel", () => {
+it("should render ActionsPanel", () => {
     render(<ActionsPanel state="disconnected" />);
 });

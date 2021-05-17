@@ -1,10 +1,10 @@
 import { render } from "@testing-library/react";
 import Layout from "./Layout";
 
-test("Horizontal layout render", () => {
+it("should render an horizontal layout", () => {
     render(<Layout orientation="horizontal" />);
 });
 
-test("Vertical layout render", () => {
+it("should render a vertical layout", () => {
     render(<Layout orientation="vertical" />);
 });

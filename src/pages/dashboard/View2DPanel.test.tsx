@@ -2,7 +2,7 @@ import { render } from "@testing-library/react";
 import { IDrone } from "./Dashboard";
 import View2DPanel from "./View2DPanel";
 
-test("Render View2DPanel", () => {
+it("should render View2DPanel", () => {
     const drone: IDrone = {
         state: "unknown",
         accelerometer: "disconnected",
