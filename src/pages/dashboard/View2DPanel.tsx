@@ -143,23 +143,18 @@ function Drone(props: { drone: IDrone }) {
     };
 
     const getArduinoColor = (): DotColor => {
-        if (state === "disconnected" || state === "unknown") {
-            return "gray";
-        }
+        if (state === "disconnected" || state === "unknown") return "gray";
         return "green";
     };
 
     const getMotorColor = (motor: IMotor): DotColor => {
-        if (motor.state === "disconnected") {
-            return "gray";
-        }
+        if (motor.state === "disconnected") return "gray";
+        if (motor.state === "failed-to-setup") return "red";
         return "green";
     };
 
     const getAccelerometerColor = (): DotColor => {
-        if (accelerometer === "disconnected") {
-            return "gray";
-        }
+        if (accelerometer === "disconnected") return "gray";
         return "green";
     };
 
