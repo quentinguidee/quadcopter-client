@@ -12,7 +12,7 @@ export function openSocket() {
         console.log("SOCKET OPENED");
     });
 
-    socket.io.on("packet", (packet) => {
-        console.log(packet);
+    socket.on("logs", (log) => {
+        console.info(log);
     });
 }
