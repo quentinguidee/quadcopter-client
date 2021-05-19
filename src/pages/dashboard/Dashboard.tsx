@@ -9,6 +9,8 @@ import View2DPanel from "./View2DPanel";
 import styles from "./sass/Dashboard.module.sass";
 import { socket } from "../../socket";
 import View3DGyro from "./View3DGyro";
+import ProcedurePanel from "./ProcedurePanel";
+import useTimer from "../../hooks/Timer";
 
 export type State =
     | "unknown"
@@ -77,6 +79,12 @@ export default function Dashboard() {
         },
     });
 
+    const time = useTimer({
+        minus: true,
+        minutes: 0,
+        seconds: 12,
+    });
+
     const listenSocket = () => {
         socket.on("state", (state) => {
             setDrone((previous) => ({ ...previous, state }));
@@ -103,14 +111,29 @@ export default function Dashboard() {
         });
     };
 
+    const unlistenSocket = () => {
+        const sockets = [
+            "state",
+            "leds",
+            "motors",
+            "accelerometer",
+            "position",
+            "angle",
+        ];
+
+        sockets.forEach((s) => socket.off(s));
+    };
+
     useEffect(() => {
         listenSocket();
+        return () => unlistenSocket();
     }, []);
 
     return (
         <div className={styles.dashboard}>
             <Layout fullSize orientation="horizontal">
                 <Layout orientation="vertical">
+                    <ProcedurePanel currentTime={time} />
                     <ActionsPanel state={drone.state} />
                     {/* <AccelerometerPanel /> */}
                 </Layout>

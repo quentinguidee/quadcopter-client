@@ -1,0 +1,85 @@
+@import "./../../../sass/variables"
+
+.timeline
+    position: relative
+    display: flex
+    gap: 12px
+    max-width: 340px
+    overflow: hidden
+    height: 62px
+
+.element
+    position: absolute
+    width: 200px
+    transition: all 1s linear
+
+.countdown
+    display: inline-block
+    padding: 8px 12px
+    margin-bottom: 12px
+    font-size: 16px
+    background-color: $color-third-background
+
+.label
+    text-transform: uppercase
+    color: $color-secondary-text
+    transition: all 0.2s ease-in-out
+
+    &Colored
+        color: $color-primary-text
+
+.time
+    color: $color-secondary-text
+    font-size: 12px
+    font-weight: 600
+    padding-top: 4px
+    transition: all 0.2s ease-in-out
+
+    &Colored
+        color: $color-primary-text
+
+.decoration
+    display: flex
+    margin: 8px 0
+
+.dot
+    display: inline-block
+    width: 8px
+    height: 8px
+    border-radius: 50%
+    background-color: $color-secondary-text
+    align-self: center
+    z-index: 2
+    transition: all 0.2s ease-in-out
+
+    &Colored
+        background-color: $color-primary-text
+        z-index: 5
+
+.line
+    position: absolute
+    left: 0
+    right: 0
+    background-color: $color-secondary-text
+    height: 2px
+    flex-grow: 1
+    margin-left: 12px
+    align-self: center
+    z-index: 3
+
+    &::before
+        content: ''
+        position: absolute
+        left: 50%
+        transform: translate(-50%, -50%)
+        height: 12px
+        background-color: $color-primary-text
+        width: 2px
+
+    &::after
+        content: ''
+        position: absolute
+        left: 0
+        right: 50%
+        background-color: $color-primary-text
+        height: 2px
