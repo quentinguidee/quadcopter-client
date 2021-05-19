@@ -9,8 +9,7 @@ import View2DPanel from "./View2DPanel";
 import styles from "./sass/Dashboard.module.sass";
 import { socket } from "../../socket";
 import View3DGyro from "./View3DGyro";
-import ProcedurePanel from "./ProcedurePanel";
-import useTimer from "../../hooks/Timer";
+import ProcedurePanel, { ITime } from "./ProcedurePanel";
 
 export type State =
     | "unknown"
@@ -79,10 +78,10 @@ export default function Dashboard() {
         },
     });
 
-    const time = useTimer({
+    const [time, setTime] = useState<ITime>({
         minus: true,
-        minutes: 0,
-        seconds: 12,
+        minutes: 1,
+        seconds: 0,
     });
 
     const sockets = [
@@ -100,10 +99,13 @@ export default function Dashboard() {
                 setDrone((previous) => ({ ...previous, [s]: packet }));
             });
         });
+
+        socket.on("timer", (time) => setTime(time));
     };
 
     const unlistenSocket = () => {
         sockets.forEach((s) => socket.off(s));
+        socket.off("timer");
     };
 
     useEffect(() => {

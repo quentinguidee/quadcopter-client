@@ -2,7 +2,7 @@ import React, { CSSProperties } from "react";
 
 import classNames from "classnames";
 
-import { ITime } from "../../hooks/Timer";
+import { ITime } from "../../pages/dashboard/ProcedurePanel";
 
 import styles from "./sass/Timeline.module.sass";
 
@@ -77,7 +77,7 @@ function Label(props: LabelProps) {
     );
 }
 
-type ElementProps = {
+export type ElementProps = {
     currentTime: ITime;
     time: ITime;
     rangeInSeconds: number;
@@ -121,35 +121,28 @@ function Countdown(props: CountdownProps) {
 type TimelineProps = {
     currentTime: ITime;
     rangeInSeconds: number;
-    elements: ElementProps[];
+    elements: {
+        time: ITime;
+        title: string;
+    }[];
 };
 
 export default function Timeline(props: TimelineProps) {
+    const elements = props.elements.map((el) => (
+        <Element
+            key={el.title}
+            title={el.title}
+            time={el.time}
+            rangeInSeconds={props.rangeInSeconds}
+            currentTime={props.currentTime}
+        />
+    ));
     return (
         <React.Fragment>
             <Countdown time={props.currentTime} />
             <div className={styles.timeline}>
                 <Line />
-                <Element
-                    title="connection"
-                    time={{
-                        minus: false,
-                        minutes: 0,
-                        seconds: 5,
-                    }}
-                    rangeInSeconds={props.rangeInSeconds}
-                    currentTime={props.currentTime}
-                />
-                <Element
-                    title="setup"
-                    time={{
-                        minus: true,
-                        minutes: 0,
-                        seconds: 5,
-                    }}
-                    rangeInSeconds={props.rangeInSeconds}
-                    currentTime={props.currentTime}
-                />
+                {elements}
             </div>
         </React.Fragment>
     );
