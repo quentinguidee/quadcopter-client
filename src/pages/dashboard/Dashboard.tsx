@@ -85,49 +85,31 @@ export default function Dashboard() {
         seconds: 12,
     });
 
+    const sockets = [
+        "state",
+        "leds",
+        "motors",
+        "accelerometer",
+        "position",
+        "angle",
+    ];
+
     const listenSocket = () => {
-        socket.on("state", (state) => {
-            setDrone((previous) => ({ ...previous, state }));
-        });
-
-        socket.on("leds", (leds) => {
-            setDrone((previous) => ({ ...previous, leds }));
-        });
-
-        socket.on("motors", (motors) => {
-            setDrone((previous) => ({ ...previous, motors }));
-        });
-
-        socket.on("accelerometer", (accelerometer) => {
-            setDrone((previous) => ({ ...previous, accelerometer }));
-        });
-
-        socket.on("position", (position) => {
-            setDrone((previous) => ({ ...previous, position }));
-        });
-
-        socket.on("angle", (angle) => {
-            setDrone((previous) => ({ ...previous, angle }));
+        sockets.forEach((s) => {
+            socket.on(s, (packet) => {
+                setDrone((previous) => ({ ...previous, [s]: packet }));
+            });
         });
     };
 
     const unlistenSocket = () => {
-        const sockets = [
-            "state",
-            "leds",
-            "motors",
-            "accelerometer",
-            "position",
-            "angle",
-        ];
-
         sockets.forEach((s) => socket.off(s));
     };
 
     useEffect(() => {
         listenSocket();
         return () => unlistenSocket();
-    }, []);
+    });
 
     return (
         <div className={styles.dashboard}>
