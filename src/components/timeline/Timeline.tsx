@@ -89,7 +89,7 @@ function Element(props: ElementProps) {
     const coeff = props.currentTime.minus ? 1 : -1;
 
     const position = `calc(${
-        (100 * diff * coeff) / props.rangeInSeconds
+        (100 * (diff * coeff - 1)) / props.rangeInSeconds
     }% + 50%)`;
     let style: CSSProperties = { left: position };
 
