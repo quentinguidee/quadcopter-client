@@ -9,7 +9,7 @@ import View2DPanel from "./View2DPanel";
 import styles from "./sass/Dashboard.module.sass";
 import { socket } from "../../socket";
 import View3DGyro from "./View3DGyro";
-import ProcedurePanel, { ITime, ITimer } from "./ProcedurePanel";
+import ProcedurePanel, { ITimer } from "./ProcedurePanel";
 
 export type State =
     | "unknown"
