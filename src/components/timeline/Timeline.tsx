@@ -18,8 +18,46 @@ function durationBetween(timeA: ITime, timeB: ITime) {
     return B - A;
 }
 
-function Line() {
-    return <div className={styles.line} />;
+type LineProps = {
+    start: ITime;
+    end: ITime;
+    currentTime: ITime;
+    rangeInSeconds: number;
+};
+
+function Line(props: LineProps) {
+    const getStyleLineColored = (): CSSProperties => {
+        const diff = durationBetween(props.start, props.currentTime);
+        const coeff = props.currentTime.minus ? 1 : -1;
+
+        let percentage = (100 * (diff * coeff)) / props.rangeInSeconds;
+
+        const positionLineColored = `calc(${
+            percentage <= -50 ? -50 : percentage
+        }% + 50%)`;
+
+        return { left: positionLineColored };
+    };
+
+    const getStyleLine = (): CSSProperties => {
+        const diff = durationBetween(props.currentTime, props.end);
+
+        let percentage = (100 * (diff * -1) + 1) / props.rangeInSeconds;
+
+        const positionLine = `calc(${
+            percentage >= 50 ? 50 : percentage
+        }% + 50%)`;
+
+        return { right: positionLine };
+    };
+
+    return (
+        <React.Fragment>
+            <div className={styles.lineCenter} />
+            <div className={styles.lineColored} style={getStyleLineColored()} />
+            <div className={styles.line} style={getStyleLine()} />
+        </React.Fragment>
+    );
 }
 
 type DotProps = {
@@ -119,29 +157,40 @@ function Countdown(props: CountdownProps) {
 }
 
 type TimelineProps = {
-    currentTime: ITime;
+    start?: ITime;
+    stop?: ITime;
+    currentTime?: ITime;
     rangeInSeconds: number;
-    elements: {
+    events: {
         time: ITime;
         title: string;
     }[];
 };
 
 export default function Timeline(props: TimelineProps) {
-    const elements = props.elements.map((el) => (
+    if (!props.start || !props.stop || !props.currentTime)
+        return <React.Fragment />;
+
+    const elements = props.events.map((el) => (
         <Element
             key={el.title}
             title={el.title}
             time={el.time}
             rangeInSeconds={props.rangeInSeconds}
-            currentTime={props.currentTime}
+            currentTime={props.currentTime!}
         />
     ));
+
     return (
         <React.Fragment>
             <Countdown time={props.currentTime} />
             <div className={styles.timeline}>
-                <Line />
+                <Line
+                    start={props.start}
+                    end={props.stop}
+                    rangeInSeconds={props.rangeInSeconds}
+                    currentTime={props.currentTime}
+                />
                 {elements}
             </div>
         </React.Fragment>

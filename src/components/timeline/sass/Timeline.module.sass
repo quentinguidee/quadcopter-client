@@ -58,27 +58,32 @@
 
 .line
     position: absolute
-    left: 0
+    left: 50%
     right: 0
     background-color: $color-secondary-text
     height: 2px
     flex-grow: 1
     align-self: center
     z-index: 3
+    transition: all 1s linear
 
-    &::before
+    &Center
         content: ''
         position: absolute
         left: 50%
-        transform: translate(-50%, -50%)
         height: 12px
         background-color: $color-primary-text
         width: 2px
+        align-self: center
+        z-index: 10
 
-    &::after
+    &Colored
         content: ''
         position: absolute
         left: 0
         right: 50%
         background-color: $color-primary-text
         height: 2px
+        align-self: center
+        z-index: 12
+        transition: all 1s linear

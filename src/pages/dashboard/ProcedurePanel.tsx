@@ -10,34 +10,44 @@ export type ITime = {
     seconds: number;
 };
 
-type Procedure = {
+type Event = {
     name: string;
     time: ITime;
     request: string;
 };
 
 type ProcedurePanelProps = {
-    currentTime: ITime;
+    currentTime?: ITime;
 };
 
 export default function ProcedurePanel(props: ProcedurePanelProps) {
-    const [procedure, setProcedure] = useState<Procedure[]>([]);
+    const [start, setStart] = useState<ITime>();
+    const [stop, setStop] = useState<ITime>();
+
+    const [events, setEvents] = useState<Event[]>([]);
 
     const startMotorsTestProcedure = () => {
         server.get("/procedures/motors-test").then((res) => {
-            setProcedure(res.data.procedure.events);
-            server.post("/procedures/motors-test/start");
+            const procedure = res.data.procedure;
+
+            setEvents(procedure.events);
+            setStart(procedure.start);
+            setStop(procedure.stop);
+
+            setTimeout(() => {
+                server.post("/procedures/motors-test/start");
+            }, 1000);
         });
     };
 
     let content: any;
 
-    if (procedure.length === 0) {
+    if (events.length === 0) {
         content = (
             <Button value="motors test" onClick={startMotorsTestProcedure} />
         );
     } else {
-        const elements = procedure.map((procedure) => ({
+        const eventsFormatted = events.map((procedure) => ({
             time: procedure.time,
             title: procedure.name,
         }));
@@ -45,9 +55,11 @@ export default function ProcedurePanel(props: ProcedurePanelProps) {
         content = (
             <React.Fragment>
                 <Timeline
+                    start={start}
+                    stop={stop}
                     rangeInSeconds={15}
-                    currentTime={props.currentTime}
-                    elements={elements}
+                    currentTime={props.currentTime || start}
+                    events={eventsFormatted}
                 />
             </React.Fragment>
         );

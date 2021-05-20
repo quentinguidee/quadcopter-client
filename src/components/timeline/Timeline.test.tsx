@@ -10,7 +10,7 @@ it("should render Timeline", () => {
                 minutes: 0,
                 seconds: 12,
             }}
-            elements={[]}
+            events={[]}
         />
     );
 });

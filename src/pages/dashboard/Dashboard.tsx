@@ -78,11 +78,7 @@ export default function Dashboard() {
         },
     });
 
-    const [time, setTime] = useState<ITime>({
-        minus: true,
-        minutes: 1,
-        seconds: 0,
-    });
+    const [time, setTime] = useState<ITime>();
 
     const sockets = [
         "state",
