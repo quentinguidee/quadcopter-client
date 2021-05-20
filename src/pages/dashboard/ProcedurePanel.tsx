@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Button from "../../components/button/Button";
+import Layout from "../../components/layout/Layout";
 import Panel from "../../components/panel/Panel";
 import Timeline from "../../components/timeline/Timeline";
 import { server } from "../../server";
@@ -35,6 +36,13 @@ export default function ProcedurePanel(props: ProcedurePanelProps) {
 
     const [procedure, setProcedure] = useState(props.procedure);
 
+    const reset = () => {
+        server
+            .post(`/procedures/${procedure}/reset`)
+            .then((res) => console.log(res))
+            .catch((err) => console.error(err));
+    };
+
     const startMotorsTestProcedure = () => {
         setProcedure("motors-test");
     };
@@ -53,7 +61,10 @@ export default function ProcedurePanel(props: ProcedurePanelProps) {
                 setStop(procedure.stop);
 
                 setTimeout(() => {
-                    server.post("/procedures/motors-test/start");
+                    server
+                        .post("/procedures/motors-test/start")
+                        .then((res) => console.log(res.data))
+                        .catch((err) => console.log(err));
                 }, 1000);
             });
         };
@@ -67,7 +78,7 @@ export default function ProcedurePanel(props: ProcedurePanelProps) {
 
     let content: any;
 
-    if (events.length === 0) {
+    if (!procedure) {
         content = (
             <Button value="motors test" onClick={startMotorsTestProcedure} />
         );
@@ -77,15 +88,28 @@ export default function ProcedurePanel(props: ProcedurePanelProps) {
             title: procedure.name,
         }));
 
+        let buttons;
+
+        console.log(props.currentTimer?.finished);
+
+        if (props.currentTimer?.finished) {
+            buttons = <Button value="reset" onClick={reset} />;
+        }
+
         content = (
             <React.Fragment>
-                <Timeline
-                    start={start}
-                    stop={stop}
-                    rangeInSeconds={15}
-                    currentTime={props.currentTimer?.current || start}
-                    events={eventsFormatted}
-                />
+                <Layout orientation="vertical" style={{ gap: "16px" }}>
+                    <div>
+                        <Timeline
+                            start={start}
+                            stop={stop}
+                            rangeInSeconds={10}
+                            currentTime={props.currentTimer?.current || start}
+                            events={eventsFormatted}
+                        />
+                    </div>
+                    {buttons}
+                </Layout>
             </React.Fragment>
         );
     }

@@ -15,6 +15,7 @@ export default function Layout(props: LayoutProps) {
         <div
             {...props}
             style={{
+                ...props.style,
                 flexGrow: props.grow,
                 height: props.fullSize ? "100%" : undefined,
                 width: props.fullSize ? "100%" : undefined,
