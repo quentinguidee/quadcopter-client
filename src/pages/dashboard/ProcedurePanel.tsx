@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "../../components/button/Button";
 import Panel from "../../components/panel/Panel";
 import Timeline from "../../components/timeline/Timeline";
@@ -10,6 +10,12 @@ export type ITime = {
     seconds: number;
 };
 
+export type ITimer = {
+    running: boolean;
+    finished: boolean;
+    current: ITime;
+};
+
 type Event = {
     name: string;
     time: ITime;
@@ -17,7 +23,8 @@ type Event = {
 };
 
 type ProcedurePanelProps = {
-    currentTime?: ITime;
+    currentTimer?: ITimer;
+    procedure?: string;
 };
 
 export default function ProcedurePanel(props: ProcedurePanelProps) {
@@ -26,19 +33,37 @@ export default function ProcedurePanel(props: ProcedurePanelProps) {
 
     const [events, setEvents] = useState<Event[]>([]);
 
+    const [procedure, setProcedure] = useState(props.procedure);
+
     const startMotorsTestProcedure = () => {
-        server.get("/procedures/motors-test").then((res) => {
-            const procedure = res.data.procedure;
-
-            setEvents(procedure.events);
-            setStart(procedure.start);
-            setStop(procedure.stop);
-
-            setTimeout(() => {
-                server.post("/procedures/motors-test/start");
-            }, 1000);
-        });
+        setProcedure("motors-test");
     };
+
+    useEffect(() => {
+        const refreshEvents = () => {
+            if (!procedure) return;
+
+            server.get(`/procedures/${procedure}`).then((res) => {
+                const procedure = res.data.procedure;
+
+                setProcedure("motors-test");
+
+                setEvents(procedure.events);
+                setStart(procedure.start);
+                setStop(procedure.stop);
+
+                setTimeout(() => {
+                    server.post("/procedures/motors-test/start");
+                }, 1000);
+            });
+        };
+
+        refreshEvents();
+    }, [procedure]);
+
+    useEffect(() => {
+        setProcedure(props.procedure);
+    }, [props.procedure]);
 
     let content: any;
 
@@ -58,7 +83,7 @@ export default function ProcedurePanel(props: ProcedurePanelProps) {
                     start={start}
                     stop={stop}
                     rangeInSeconds={15}
-                    currentTime={props.currentTime || start}
+                    currentTime={props.currentTimer?.current || start}
                     events={eventsFormatted}
                 />
             </React.Fragment>

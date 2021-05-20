@@ -9,7 +9,7 @@ import View2DPanel from "./View2DPanel";
 import styles from "./sass/Dashboard.module.sass";
 import { socket } from "../../socket";
 import View3DGyro from "./View3DGyro";
-import ProcedurePanel, { ITime } from "./ProcedurePanel";
+import ProcedurePanel, { ITime, ITimer } from "./ProcedurePanel";
 
 export type State =
     | "unknown"
@@ -23,6 +23,7 @@ export type State =
 export type LedState = "disconnected" | "on" | "off";
 export type MotorState = "disconnected" | "on" | "off" | "failed-to-setup";
 export type AccelerometerState = "disconnected" | "on";
+export type Procedure = "motors-test";
 
 export type Coordinate = {
     x: number;
@@ -51,6 +52,7 @@ export type LedsState = {
 
 export type IDrone = {
     state: State;
+    procedure?: Procedure;
     accelerometer: AccelerometerState;
     position: Coordinate;
     angle: Coordinate;
@@ -61,6 +63,7 @@ export type IDrone = {
 export default function Dashboard() {
     const [drone, setDrone] = useState<IDrone>({
         state: "unknown",
+        procedure: undefined,
         accelerometer: "disconnected",
         position: { x: 0, y: 0, z: 0 },
         angle: { x: 0, y: 0, z: 0 },
@@ -78,7 +81,7 @@ export default function Dashboard() {
         },
     });
 
-    const [time, setTime] = useState<ITime>();
+    const [time, setTime] = useState<ITimer>();
 
     const sockets = [
         "state",
@@ -87,6 +90,7 @@ export default function Dashboard() {
         "accelerometer",
         "position",
         "angle",
+        "procedure",
     ];
 
     const listenSocket = () => {
@@ -113,7 +117,10 @@ export default function Dashboard() {
         <div className={styles.dashboard}>
             <Layout fullSize orientation="horizontal">
                 <Layout orientation="vertical">
-                    <ProcedurePanel currentTime={time} />
+                    <ProcedurePanel
+                        currentTimer={time}
+                        procedure={drone.procedure}
+                    />
                     <ActionsPanel state={drone.state} />
                     {/* <AccelerometerPanel /> */}
                 </Layout>
