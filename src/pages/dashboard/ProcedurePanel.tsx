@@ -14,6 +14,7 @@ export type ITime = {
 export type ITimer = {
     canReset: boolean;
     finished: boolean;
+    forceStopped: boolean;
     current: ITime;
 };
 
@@ -60,7 +61,10 @@ export default function ProcedurePanel(props: ProcedurePanelProps) {
                 setStart(procedure.start);
                 setStop(procedure.stop);
 
-                if (props.currentTimer?.canReset) {
+                if (
+                    !props.currentTimer?.forceStopped &&
+                    props.currentTimer?.canReset
+                ) {
                     setTimeout(() => {
                         server
                             .post("/procedures/motors-test/start")
@@ -72,7 +76,11 @@ export default function ProcedurePanel(props: ProcedurePanelProps) {
         };
 
         refreshEvents();
-    }, [procedure, props.currentTimer?.canReset]);
+    }, [
+        procedure,
+        props.currentTimer?.canReset,
+        props.currentTimer?.forceStopped,
+    ]);
 
     useEffect(() => {
         setProcedure(props.procedure);
@@ -92,7 +100,7 @@ export default function ProcedurePanel(props: ProcedurePanelProps) {
 
         let buttons;
 
-        if (props.currentTimer?.finished) {
+        if (props.currentTimer?.finished || props.currentTimer?.forceStopped) {
             buttons = <Button value="reset" onClick={reset} />;
         }
 
