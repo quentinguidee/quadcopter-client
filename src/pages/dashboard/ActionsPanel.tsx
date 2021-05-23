@@ -14,8 +14,8 @@ export default function ActionsPanel(props: ActionsPanelProps) {
 
     const on = async () => await server.post("/drone/on");
     const off = async () => await server.post("/drone/off");
-    const liftoff = () => {};
-    const landing = () => {};
+    const liftoff = async () => await server.post("/drone/liftoff");
+    const landing = async () => await server.post("/drone/landing");
 
     const startMotorsTest = async () => {
         await server.post("/drone/motorstest/on");
