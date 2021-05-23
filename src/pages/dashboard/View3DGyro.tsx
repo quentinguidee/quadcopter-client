@@ -14,9 +14,9 @@ export default function View3DGyro(props: View3DGyroProps) {
     let { x, y, z } = props.angle;
 
     const { rotationX, rotationY, rotationZ } = useSpring({
-        rotationX: MathUtils.degToRad(x),
-        rotationY: MathUtils.degToRad(z),
-        rotationZ: MathUtils.degToRad(y),
+        rotationX: MathUtils.degToRad(x ?? 0),
+        rotationY: MathUtils.degToRad(z ?? 0),
+        rotationZ: MathUtils.degToRad(y ?? 0),
         config: config.default,
     });
 

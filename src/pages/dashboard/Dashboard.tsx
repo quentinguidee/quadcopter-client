@@ -10,6 +10,8 @@ import styles from "./sass/Dashboard.module.sass";
 import { socket } from "../../socket";
 import View3DGyro from "./View3DGyro";
 import ProcedurePanel, { ITimer } from "./ProcedurePanel";
+import AccelerometerPanel from "./AltitudePanel";
+import AltitudePanel from "./AltitudePanel";
 
 export type State =
     | "unknown"
@@ -26,9 +28,9 @@ export type AccelerometerState = "disconnected" | "on";
 export type Procedure = "motors-test";
 
 export type Coordinate = {
-    x: number;
-    y: number;
-    z: number;
+    x?: number;
+    y?: number;
+    z?: number;
 };
 
 export type IMotor = {
@@ -65,8 +67,8 @@ export default function Dashboard() {
         state: "unknown",
         procedure: undefined,
         accelerometer: "disconnected",
-        position: { x: 0, y: 0, z: 0 },
-        angle: { x: 0, y: 0, z: 0 },
+        position: { x: undefined, y: undefined, z: undefined },
+        angle: { x: undefined, y: undefined, z: undefined },
         leds: {
             led1: "disconnected",
             led2: "disconnected",
@@ -122,13 +124,13 @@ export default function Dashboard() {
                         procedure={drone.procedure}
                     />
                     <ActionsPanel state={drone.state} />
-                    {/* <AccelerometerPanel /> */}
                 </Layout>
                 <Layout grow={1} orientation="vertical">
                     <View2DPanel drone={drone} />
                     <Layout orientation="horizontal">
                         <MotorsPanel motors={drone.motors} />
                         <View3DGyro angle={drone.angle} />
+                        <AltitudePanel altitude={drone.position.z} />
                         <LayoutSpace />
                         <CameraPanel />
                     </Layout>
