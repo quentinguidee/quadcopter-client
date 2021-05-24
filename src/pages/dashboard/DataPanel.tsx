@@ -4,6 +4,21 @@ import { IDrone } from "./Dashboard";
 
 import styles from "./sass/Dashboard.module.sass";
 
+type DataProps = {
+    label: string;
+    value?: string | number;
+};
+
+function Data(props: DataProps) {
+    const { label, value } = props;
+
+    return (
+        <span className={styles.dataElement}>
+            {label}: {value}
+        </span>
+    );
+}
+
 type DataPanelProps = {
     drone: IDrone;
 };
@@ -14,18 +29,14 @@ export default function DataPanel(props: DataPanelProps) {
     return (
         <Panel className={styles.data}>
             <div>
-                <span>posX: {position.x}</span>
-                <br />
-                <span>posY: {position.y}</span>
-                <br />
-                <span>posZ: {position.z}</span>
+                <Data label="posX" value={position.x} />
+                <Data label="posY" value={position.y} />
+                <Data label="posZ" value={position.z} />
             </div>
             <div>
-                <span>angleX: {angle.x}</span>
-                <br />
-                <span>angleY: {angle.y}</span>
-                <br />
-                <span>angleZ: {angle.z}</span>
+                <Data label="angleX" value={angle.x} />
+                <Data label="angleY" value={angle.y} />
+                <Data label="angleZ" value={angle.z} />
             </div>
         </Panel>
     );
