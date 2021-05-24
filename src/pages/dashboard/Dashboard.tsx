@@ -10,8 +10,8 @@ import styles from "./sass/Dashboard.module.sass";
 import { socket } from "../../socket";
 import View3DGyro from "./View3DGyro";
 import ProcedurePanel, { ITimer } from "./ProcedurePanel";
-import AccelerometerPanel from "./AltitudePanel";
 import AltitudePanel from "./AltitudePanel";
+import DataPanel from "./DataPanel";
 
 export type State =
     | "unknown"
@@ -124,6 +124,7 @@ export default function Dashboard() {
                         procedure={drone.procedure}
                     />
                     <ActionsPanel state={drone.state} />
+                    <DataPanel drone={drone} />
                 </Layout>
                 <Layout grow={1} orientation="vertical">
                     <View2DPanel drone={drone} />
