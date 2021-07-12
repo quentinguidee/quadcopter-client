@@ -29,14 +29,14 @@ export default function DataPanel(props: DataPanelProps) {
     return (
         <Panel className={styles.data}>
             <div>
-                <Data label="posX" value={position.x} />
-                <Data label="posY" value={position.y} />
-                <Data label="posZ" value={position.z} />
+                <Data label="posX" value={position?.x} />
+                <Data label="posY" value={position?.y} />
+                <Data label="posZ" value={position?.z} />
             </div>
             <div>
-                <Data label="angleX" value={angle.x} />
-                <Data label="angleY" value={angle.y} />
-                <Data label="angleZ" value={angle.z} />
+                <Data label="angleX" value={angle?.x} />
+                <Data label="angleY" value={angle?.y} />
+                <Data label="angleZ" value={angle?.z} />
             </div>
         </Panel>
     );

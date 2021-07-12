@@ -10,7 +10,7 @@ type MotorsPanelProps = {
 };
 
 export default function MotorsPanel(props: MotorsPanelProps) {
-    const { motor1, motor2, motor3, motor4 } = props.motors;
+    const { motor1, motor2, motor3, motor4 } = props.motors ?? {};
 
     const MIN = 0;
     const MAX = 180;
@@ -22,10 +22,10 @@ export default function MotorsPanel(props: MotorsPanelProps) {
 
     return (
         <Panel className={styles.motors}>
-            <Axis1D name="A" value={motor1.speed} {...axisProps} />
-            <Axis1D name="B" value={motor2.speed} {...axisProps} />
-            <Axis1D name="C" value={motor3.speed} {...axisProps} />
-            <Axis1D name="D" value={motor4.speed} {...axisProps} />
+            <Axis1D name="A" value={motor1?.speed} {...axisProps} />
+            <Axis1D name="B" value={motor2?.speed} {...axisProps} />
+            <Axis1D name="C" value={motor3?.speed} {...axisProps} />
+            <Axis1D name="D" value={motor4?.speed} {...axisProps} />
         </Panel>
     );
 }

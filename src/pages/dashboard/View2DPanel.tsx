@@ -148,8 +148,8 @@ function Drone(props: { drone: IDrone }) {
     };
 
     const getMotorColor = (motor: IMotor): DotColor => {
-        if (motor.state === "disconnected") return "gray";
-        if (motor.state === "failed-to-setup") return "red";
+        if (motor?.state === "disconnected") return "gray";
+        if (motor?.state === "failed-to-setup") return "red";
         return "green";
     };
 
@@ -159,7 +159,7 @@ function Drone(props: { drone: IDrone }) {
     };
 
     const motorIsOn = (motor: IMotor) => {
-        return motor.speed !== undefined && motor.speed !== 0;
+        return motor?.speed !== undefined && motor.speed !== 0;
     };
 
     return (
@@ -167,61 +167,61 @@ function Drone(props: { drone: IDrone }) {
             <div className={styles.droneTop} />
             <div className={styles.droneCenter} />
             <div className={styles.droneBottom} />
-            <Led name="ledA" color="blue" on={leds.led1 === "on"} />
-            <Led name="ledB" color="blue" on={leds.led1 === "on"} />
-            <Led name="ledC" color="red" on={leds.led1 === "on"} />
-            <Led name="ledD" color="red" on={leds.led1 === "on"} />
+            <Led name="ledA" color="blue" on={leds?.led1 === "on"} />
+            <Led name="ledB" color="blue" on={leds?.led1 === "on"} />
+            <Led name="ledC" color="red" on={leds?.led1 === "on"} />
+            <Led name="ledD" color="red" on={leds?.led1 === "on"} />
             <Label
                 name="labelA"
                 label="LED A"
-                color={getLedDotColor(leds.led1)}
+                color={getLedDotColor(leds?.led1)}
             />
             <Label
                 name="labelB"
                 label="LED B"
-                color={getLedDotColor(leds.led2)}
+                color={getLedDotColor(leds?.led2)}
             />
             <Label
                 name="labelC"
                 label="LED C"
-                color={getLedDotColor(leds.led3)}
+                color={getLedDotColor(leds?.led3)}
             />
             <Label
                 name="labelD"
                 label="LED D"
-                color={getLedDotColor(leds.led4)}
+                color={getLedDotColor(leds?.led4)}
             />
-            <Motor name="motorA" on={motorIsOn(motors.motor1)} clockwise />
+            <Motor name="motorA" on={motorIsOn(motors?.motor1)} clockwise />
             <Motor
                 name="motorB"
-                on={motorIsOn(motors.motor2)}
+                on={motorIsOn(motors?.motor2)}
                 clockwise={false}
             />
             <Motor
                 name="motorC"
-                on={motorIsOn(motors.motor3)}
+                on={motorIsOn(motors?.motor3)}
                 clockwise={false}
             />
-            <Motor name="motorD" on={motorIsOn(motors.motor4)} clockwise />
+            <Motor name="motorD" on={motorIsOn(motors?.motor4)} clockwise />
             <Label
                 name="motorLabelA"
                 label="MOTOR A"
-                color={getMotorColor(motors.motor1)}
+                color={getMotorColor(motors?.motor1)}
             />
             <Label
                 name="motorLabelB"
                 label="MOTOR B"
-                color={getMotorColor(motors.motor2)}
+                color={getMotorColor(motors?.motor2)}
             />
             <Label
                 name="motorLabelC"
                 label="MOTOR C"
-                color={getMotorColor(motors.motor3)}
+                color={getMotorColor(motors?.motor3)}
             />
             <Label
                 name="motorLabelD"
                 label="MOTOR D"
-                color={getMotorColor(motors.motor4)}
+                color={getMotorColor(motors?.motor4)}
             />
             <BasicComponent x={0} y={-40} height={50} />
             <BasicComponent x={0} y={30} height={30} />

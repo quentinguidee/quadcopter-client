@@ -131,7 +131,7 @@ export default function Dashboard() {
                     <Layout orientation="horizontal">
                         <MotorsPanel motors={drone.motors} />
                         <View3DGyro angle={drone.angle} />
-                        <AltitudePanel altitude={drone.position.z} />
+                        <AltitudePanel altitude={drone?.position?.z} />
                         <LayoutSpace />
                         <CameraPanel />
                     </Layout>

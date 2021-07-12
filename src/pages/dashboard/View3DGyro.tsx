@@ -11,7 +11,7 @@ type View3DGyroProps = {
 };
 
 export default function View3DGyro(props: View3DGyroProps) {
-    let { x, y, z } = props.angle;
+    let { x, y, z } = props.angle ?? {};
 
     const { rotationX, rotationY, rotationZ } = useSpring({
         rotationX: MathUtils.degToRad(x ?? 0),
